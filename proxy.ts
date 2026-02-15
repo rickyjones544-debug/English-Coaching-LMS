@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Public routes that don't require authentication
@@ -24,8 +24,8 @@ export function middleware(request: NextRequest) {
   // Check if the current path is protected
   const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
 
-  // Get the token from the cookies
-  const token = request.cookies.get('firebase-token')?.value;
+  // Get the token from the cookies (for Supabase)
+  const token = request.cookies.get('supabase-auth-token')?.value;
 
   // If trying to access protected route without token, redirect to login
   if (isProtectedRoute && !token) {
