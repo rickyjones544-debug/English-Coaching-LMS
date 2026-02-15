@@ -37,7 +37,7 @@ export default function Home() {
           alignItems: 'center'
         }}>
           <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3b82f6' }}>
-            Ideal Coaching Classes
+            Ideal Education by Ashutosh Sir (Rajan)
           </div>
           <div style={{ display: 'flex', gap: '2rem' }}>
             <Link href="/" style={{ color: '#374151', textDecoration: 'none', fontWeight: '500' }}>Home</Link>
@@ -70,10 +70,10 @@ export default function Home() {
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h1 style={{ fontSize: '3rem', marginBottom: '1rem', fontWeight: 'bold' }}>
-            Master English with Confidence
+            Master English with Ashutosh Sir
           </h1>
           <p style={{ fontSize: '1.25rem', marginBottom: '2rem', lineHeight: '1.6' }}>
-            Join the best English coaching classes for students from Class 1 to 12. 
+            Join Ideal Education by Ashutosh Sir for the best English coaching classes for students from Class 1 to 12. 
             Expert teachers, interactive learning, and proven results.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -376,7 +376,7 @@ export default function Home() {
                 ))}
               </div>
               <p style={{ fontStyle: 'italic', color: '#4b5563', marginBottom: '1rem' }}>
-                "Ideal Coaching Classes transformed my English skills. The teachers are amazing and the classes are so interactive!"
+                "Ideal Education by Ashutosh Sir transformed my English skills. The teachers are amazing and classes are so interactive!"
               </p>
               <p style={{ fontWeight: '600', color: '#1f2937' }}>
                 - Priya Sharma, Class 8
@@ -465,7 +465,7 @@ export default function Home() {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <p style={{ marginBottom: '1rem' }}>
-            &copy; 2024 Ideal Coaching Classes. All rights reserved.
+            &copy; 2024 Ideal Education by Ashutosh Sir (Rajan). All rights reserved.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
             <Link href="#contact" style={{ color: 'white', textDecoration: 'none' }}>Contact</Link>

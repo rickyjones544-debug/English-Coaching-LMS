@@ -101,10 +101,10 @@ export default function DashboardOverview() {
       {/* Welcome Section */}
       <div style={{marginBottom: '2rem'}}>
         <h1 style={{fontSize: '2rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem'}}>
-          Welcome back, {user?.name}!
+          Welcome back, {user?.name}! 🎉
         </h1>
-        <p style={{color: '#6b7280'}}>
-          Here's what's happening in your English learning journey today.
+        <p style={{color: '#6b7280', fontSize: '1.1rem'}}>
+          Continue your English learning journey with Ideal Education by Ashutosh Sir today.
         </p>
       </div>
 
