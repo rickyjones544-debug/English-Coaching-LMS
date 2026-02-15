@@ -14,7 +14,12 @@ import {
   Calendar,
   Clock,
   Video,
-  Download
+  Download,
+  Phone,
+  Mail,
+  MapPin,
+  Send,
+  MessageCircle
 } from 'lucide-react';
 
 export default function Home() {
@@ -455,6 +460,223 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* Contact Section */}
+      <section id="contact" style={{ padding: '4rem 2rem', background: '#f9fafb' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', textAlign: 'center', color: '#1f2937' }}>
+            Get in Touch
+          </h2>
+          <p style={{ fontSize: '1.2rem', color: '#6b7280', textAlign: 'center', marginBottom: '3rem' }}>
+            Have questions? We'd love to hear from you!
+          </p>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
+            {/* Contact Information */}
+            <div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', color: '#1f2937' }}>
+                Contact Information
+              </h3>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* Phone */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{
+                    width: '50px',
+                    height: '50px',
+                    background: '#10b981',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <Phone size={24} color="white" />
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>Phone</p>
+                    <p style={{ color: '#6b7280' }}>+91 91552 92575</p>
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{
+                    width: '50px',
+                    height: '50px',
+                    background: '#3b82f6',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <Mail size={24} color="white" />
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>Email</p>
+                    <p style={{ color: '#6b7280' }}>avok889@gmail.com</p>
+                  </div>
+                </div>
+
+                {/* WhatsApp */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{
+                    width: '50px',
+                    height: '50px',
+                    background: '#25d366',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <MessageCircle size={24} color="white" />
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>WhatsApp</p>
+                    <a 
+                      href="https://wa.me/919155292575" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      style={{ 
+                        color: '#6b7280', 
+                        textDecoration: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
+                    >
+                      Chat on WhatsApp
+                      <ChevronRight size={16} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', color: '#1f2937' }}>
+                Send us a Message
+              </h3>
+              
+              <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '500' }}>
+                    Your Name
+                  </label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter your name"
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '500' }}>
+                    Email Address
+                  </label>
+                  <input 
+                    type="email" 
+                    placeholder="your@email.com"
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '500' }}>
+                    Phone Number
+                  </label>
+                  <input 
+                    type="tel" 
+                    placeholder="+91 00000 00000"
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '500' }}>
+                    Message
+                  </label>
+                  <textarea 
+                    placeholder="Tell us how we can help you..."
+                    rows={4}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem',
+                      resize: 'vertical'
+                    }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  style={{
+                    background: '#3b82f6',
+                    color: 'white',
+                    padding: '1rem 2rem',
+                    borderRadius: '0.5rem',
+                    border: 'none',
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  <Send size={20} />
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Floating WhatsApp Button */}
+      <a 
+        href="https://wa.me/919155292575" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        style={{
+          position: 'fixed',
+          bottom: '2rem',
+          right: '2rem',
+          width: '60px',
+          height: '60px',
+          background: '#25d366',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          zIndex: 1000,
+          textDecoration: 'none'
+        }}
+      >
+        <MessageCircle size={30} color="white" />
+      </a>
 
       {/* Footer */}
       <footer style={{ 
