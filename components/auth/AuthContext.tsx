@@ -1,20 +1,10 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '@/firebase/firebaseConfig';
-import { 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged,
-  User as FirebaseUser
-} from 'firebase/auth';
-import { getUser, createUser } from '@/lib/firebase';
 import { User } from '@/types';
 
 interface AuthContextType {
   user: (User & { id: string }) | null;
-  firebaseUser: FirebaseUser | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, name: string, classGroup: string) => Promise<void>;
@@ -33,70 +23,71 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<(User & { id: string }) | null>(null);
-  const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setFirebaseUser(firebaseUser);
-      
-      if (firebaseUser) {
-        const userData = await getUser(firebaseUser.uid);
-        setUser(userData as (User & { id: string }) | null);
-      } else {
-        setUser(null);
-      }
-      
-      setLoading(false);
-    });
-
-    return unsubscribe;
+    // Check for stored user data
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      // Mock authentication - in real app, this would call your API
+      const mockUser: User & { id: string } = {
+        id: '1',
+        uid: '1',
+        email,
+        name: email.split('@')[0],
+        role: 'student',
+        classGroup: '6-8',
+        createdAt: new Date()
+      };
+      
+      setUser(mockUser);
+      localStorage.setItem('user', JSON.stringify(mockUser));
     } catch (error) {
-      throw error;
+      throw new Error('Invalid credentials');
+    } finally {
+      setLoading(false);
     }
   };
 
   const signUp = async (email: string, password: string, name: string, classGroup: string) => {
+    setLoading(true);
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      const userData = {
-        uid: result.user.uid,
-        name,
+      // Mock registration - in real app, this would call your API
+      const mockUser: User & { id: string } = {
+        id: Date.now().toString(),
+        uid: Date.now().toString(),
         email,
-        role: 'student' as const,
-        classGroup: classGroup as '1-5' | '6-8' | '9-12'
+        name,
+        role: 'student',
+        classGroup: classGroup as '1-5' | '6-8' | '9-12',
+        createdAt: new Date()
       };
-      await createUser(userData);
+      
+      setUser(mockUser);
+      localStorage.setItem('user', JSON.stringify(mockUser));
     } catch (error) {
-      throw error;
+      throw new Error('Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const value = {
-    user,
-    firebaseUser,
-    loading,
-    signIn,
-    signUp,
-    logout
+    setUser(null);
+    localStorage.removeItem('user');
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, loading, signIn, signUp, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };
