@@ -55,7 +55,7 @@ export default function Home() {
       // Also try to send email (this will open email client)
       const emailSubject = `New Contact Form - ${formData.name}`;
       const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
-      window.location.href = `mailto:avij889@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = `mailto:ashutoshrajan303@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
       
       setSubmitMessage('Thank you! Your message has been sent. We will contact you soon!');
       setFormData({ name: '', email: '', phone: '', message: '' });
@@ -557,7 +557,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>Email</p>
-                    <p style={{ color: '#6b7280' }}>avij889@gmail.com</p>
+                    <p style={{ color: '#6b7280' }}>ashutoshrajan303@gmail.com</p>
                   </div>
                 </div>
 
