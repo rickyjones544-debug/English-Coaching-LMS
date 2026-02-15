@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (firebaseUser) {
         const userData = await getUser(firebaseUser.uid);
-        setUser(userData);
+        setUser(userData as (User & { id: string }) | null);
       } else {
         setUser(null);
       }
