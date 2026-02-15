@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getAnnouncements } from '@/lib/firebase';
+import { getAnnouncements } from '@/lib/supabase';
 import { Announcement } from '@/types';
 import { 
   Bell, 

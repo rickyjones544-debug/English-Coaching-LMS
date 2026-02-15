@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/auth/AuthContext';
-import { getRecordedClasses } from '@/lib/firebase';
+import { getRecordedClasses } from '@/lib/supabase';
 import { RecordedClass } from '@/types';
 import { 
   Play, 

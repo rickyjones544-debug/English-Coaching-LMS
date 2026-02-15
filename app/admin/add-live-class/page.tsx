@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { addLiveClass } from '@/lib/firebase';
+import { addLiveClass } from '@/lib/supabase';
 import { LiveClass } from '@/types';
 import { 
   Video, 

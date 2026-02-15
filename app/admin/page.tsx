@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getAllStudents } from '@/lib/firebase';
+import { getAllStudents } from '@/lib/supabase';
 import { User } from '@/types';
 import { 
   Users, 

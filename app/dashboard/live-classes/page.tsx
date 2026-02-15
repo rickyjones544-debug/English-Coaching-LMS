@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/auth/AuthContext';
-import { getLiveClasses } from '@/lib/firebase';
+import { getLiveClasses } from '@/lib/supabase';
 import { LiveClass } from '@/types';
 import { 
   Video, 

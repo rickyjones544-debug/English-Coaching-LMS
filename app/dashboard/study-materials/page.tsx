@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/auth/AuthContext';
-import { getStudyMaterials } from '@/lib/firebase';
+import { getStudyMaterials } from '@/lib/supabase';
 import { StudyMaterial } from '@/types';
 import { 
   Download, 
