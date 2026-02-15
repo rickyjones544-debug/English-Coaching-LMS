@@ -1,4 +1,5 @@
 export interface User {
+  id?: string;
   uid: string;
   name: string;
   email: string;
@@ -8,7 +9,7 @@ export interface User {
 }
 
 export interface LiveClass {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   classGroup: '1-5' | '6-8' | '9-12';
@@ -18,7 +19,7 @@ export interface LiveClass {
 }
 
 export interface RecordedClass {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   videoUrl: string;
@@ -27,7 +28,7 @@ export interface RecordedClass {
 }
 
 export interface StudyMaterial {
-  id: string;
+  id?: string;
   title: string;
   fileUrl: string;
   classGroup: '1-5' | '6-8' | '9-12';
@@ -35,7 +36,7 @@ export interface StudyMaterial {
 }
 
 export interface Announcement {
-  id: string;
+  id?: string;
   title: string;
   content: string;
   createdAt: Date;
