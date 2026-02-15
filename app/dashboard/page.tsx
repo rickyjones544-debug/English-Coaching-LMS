@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/auth/AuthContext';
-import { mockLiveClasses, mockAnnouncements } from '@/lib/mockData';
+import { getUpcomingLiveClasses, getAnnouncements } from '@/lib/supabase';
 import { LiveClass, Announcement } from '@/types';
 import { 
   Calendar, 
@@ -21,13 +21,15 @@ export default function DashboardOverview() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Use mock data instead of Firebase
+    // Use Supabase data
     const fetchData = async () => {
       try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setUpcomingClasses(mockLiveClasses);
-        setAnnouncements(mockAnnouncements);
+        const [classesData, announcementsData] = await Promise.all([
+          getUpcomingLiveClasses(user?.classGroup),
+          getAnnouncements()
+        ]);
+        setUpcomingClasses(classesData);
+        setAnnouncements(announcementsData);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       } finally {
