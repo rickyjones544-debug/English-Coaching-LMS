@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ideal Coaching Classes - English LMS Platform
 
-## Getting Started
+A production-ready Learning Management System for Ideal Coaching Classes, Banka Bihar, focused on Spoken English and Grammar classes for Indian students (Class 1 to 12).
 
-First, run the development server:
+## Features
+
+- **Public Marketing Website** with professional landing page
+- **Authentication System** with Firebase Auth
+- **Student Dashboard** with live classes, recorded materials, and study resources
+- **Admin Panel** for teacher management
+- **Responsive Design** optimized for Indian students and parents
+
+## Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Firebase (Authentication, Firestore, Storage)
+- Lucide React Icons
+
+## Setup Instructions
+
+### 1. Clone and Install Dependencies
+
+```bash
+git clone <repository-url>
+cd ideal-coaching-classes
+npm install
+```
+
+### 2. Firebase Configuration
+
+Create a Firebase project and configure:
+
+1. Enable Authentication (Email/Password)
+2. Set up Firestore Database
+3. Configure Storage
+
+Create a `.env.local` file with:
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+/app
+  /admin - Admin panel routes
+  /dashboard - Student dashboard routes
+  /auth - Authentication pages
+  /api - API routes
+/components
+  /ui - Reusable UI components
+  /auth - Authentication components
+  /dashboard - Dashboard components
+/lib
+  /firebase.ts - Firebase operations
+/firebase
+  /firebaseConfig.ts - Firebase configuration
+/types
+  /index.ts - TypeScript type definitions
+```
 
-## Learn More
+## Database Collections
 
-To learn more about Next.js, take a look at the following resources:
+- `users` - User profiles and roles
+- `liveClasses` - Scheduled live classes
+- `recordedClasses` - Video recordings
+- `materials` - Study materials (PDFs)
+- `announcements` - Teacher announcements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application is ready for deployment on Vercel:
 
-## Deploy on Vercel
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Add environment variables
+4. Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Default Admin
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To create an admin account, register with email and manually set the role to "admin" in Firestore.
+
+## Support
+
+For technical support, contact the development team.
