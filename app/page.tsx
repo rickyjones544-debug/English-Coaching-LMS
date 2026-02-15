@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { 
   GraduationCap, 
@@ -23,6 +24,49 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Send to WhatsApp
+      const whatsappMessage = `📩 New Contact Form Submission:\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n💬 Message: ${formData.message}`;
+      const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(whatsappMessage)}`;
+      
+      // Open WhatsApp with pre-filled message
+      window.open(whatsappUrl, '_blank');
+      
+      // Also try to send email (this will open email client)
+      const emailSubject = `New Contact Form - ${formData.name}`;
+      const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
+      window.location.href = `mailto:avij889@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      
+      setSubmitMessage('Thank you! Your message has been sent. We will contact you soon!');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+      
+    } catch (error) {
+      setSubmitMessage('Sorry, there was an error. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div style={{ fontFamily: 'Arial, sans-serif' }}>
       {/* Navigation */}
@@ -558,13 +602,16 @@ export default function Home() {
                 Send us a Message
               </h3>
               
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '500' }}>
                     Your Name
                   </label>
                   <input 
                     type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="Enter your name"
                     style={{
                       width: '100%',
@@ -582,6 +629,9 @@ export default function Home() {
                   </label>
                   <input 
                     type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="your@email.com"
                     style={{
                       width: '100%',
@@ -599,6 +649,9 @@ export default function Home() {
                   </label>
                   <input 
                     type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     placeholder="+91 00000 00000"
                     style={{
                       width: '100%',
@@ -615,6 +668,9 @@ export default function Home() {
                     Message
                   </label>
                   <textarea 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     placeholder="Tell us how we can help you..."
                     rows={4}
                     style={{
@@ -628,25 +684,42 @@ export default function Home() {
                   />
                 </div>
 
+                {submitMessage && (
+                  <div style={{
+                    padding: '1rem',
+                    background: submitMessage.includes('Thank you') ? '#10b981' : '#ef4444',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    textAlign: 'center'
+                  }}>
+                    {submitMessage}
+                  </div>
+                )}
+
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   style={{
-                    background: '#3b82f6',
+                    background: isSubmitting ? '#9ca3af' : '#3b82f6',
                     color: 'white',
                     padding: '1rem 2rem',
                     borderRadius: '0.5rem',
                     border: 'none',
                     fontSize: '1.1rem',
                     fontWeight: '600',
-                    cursor: 'pointer',
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '0.5rem'
                   }}
                 >
-                  <Send size={20} />
-                  Send Message
+                  {isSubmitting ? 'Sending...' : (
+                    <>
+                      <Send size={20} />
+                      Send Message
+                    </>
+                  )}
                 </button>
               </form>
             </div>
