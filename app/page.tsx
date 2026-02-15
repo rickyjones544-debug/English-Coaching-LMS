@@ -513,7 +513,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>Email</p>
-                    <p style={{ color: '#6b7280' }}>avok889@gmail.com</p>
+                    <p style={{ color: '#6b7280' }}>avij889@gmail.com</p>
                   </div>
                 </div>
 
