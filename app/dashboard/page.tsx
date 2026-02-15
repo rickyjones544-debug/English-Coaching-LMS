@@ -21,7 +21,7 @@ export default function DashboardOverview() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Use Supabase data
+    // Use Supabase data with fallback
     const fetchData = async () => {
       try {
         const [classesData, announcementsData] = await Promise.all([
@@ -32,6 +32,26 @@ export default function DashboardOverview() {
         setAnnouncements(announcementsData);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+        // Fallback mock data if Supabase fails
+        setUpcomingClasses([
+          {
+            id: '1',
+            title: 'Spoken English Basics',
+            description: 'Learn fundamental spoken English skills',
+            classGroup: '6-8',
+            zoomLink: 'https://zoom.us/j/123456789',
+            date: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            createdAt: new Date()
+          }
+        ]);
+        setAnnouncements([
+          {
+            id: '1',
+            title: 'Weekend Class Schedule',
+            content: 'This weekend we have special grammar classes on Saturday and spoken English practice on Sunday.',
+            createdAt: new Date()
+          }
+        ]);
       } finally {
         setLoading(false);
       }
