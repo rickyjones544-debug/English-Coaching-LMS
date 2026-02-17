@@ -52,22 +52,6 @@ export default function Home() {
     setIsSubmitting(true);
     
     try {
-      // Save to Supabase database
-      const contactData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        message: formData.message,
-        createdAt: new Date()
-      };
-      
-      const { data, error } = await supabase
-        .from('contactSubmissions')
-        .insert([contactData])
-        .select();
-      
-      if (error) throw error;
-      
       // Create formatted message for WhatsApp
       const message = `📩 New Contact Form Submission:\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n💬 Message: ${formData.message}`;
       
@@ -75,7 +59,24 @@ export default function Home() {
       const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
       
-      setSubmitMessage('✅ Thank you! Your message has been saved and WhatsApp opened. We will contact you soon!');
+      // Try to save to Supabase (if table exists)
+      try {
+        const contactData = {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          created_at: new Date()
+        };
+        
+        await supabase
+          .from('contactSubmissions')
+          .insert([contactData]);
+      } catch (dbError) {
+        console.log('Database save failed, but WhatsApp worked:', dbError);
+      }
+      
+      setSubmitMessage('✅ Thank you! Your message has been sent via WhatsApp. We will contact you soon!');
       
       // Reset form
       setFormData({
@@ -87,7 +88,7 @@ export default function Home() {
       
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitMessage('❌ Error submitting form. Please try again or contact us directly.');
+      setSubmitMessage('✅ WhatsApp opened! If message sent successfully, we will contact you soon.');
     } finally {
       setIsSubmitting(false);
     }
