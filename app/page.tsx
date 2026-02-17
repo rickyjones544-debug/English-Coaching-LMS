@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
 import { 
   GraduationCap, 
   Users, 
@@ -58,23 +57,6 @@ export default function Home() {
       // Send to WhatsApp
       const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
-      
-      // Try to save to Supabase (if table exists)
-      try {
-        const contactData = {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          created_at: new Date()
-        };
-        
-        await supabase
-          .from('contactSubmissions')
-          .insert([contactData]);
-      } catch (dbError) {
-        console.log('Database save failed, but WhatsApp worked:', dbError);
-      }
       
       setSubmitMessage('✅ Thank you! Your message has been sent via WhatsApp. We will contact you soon!');
       
