@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
 import { 
   GraduationCap, 
   Users, 
@@ -51,50 +52,42 @@ export default function Home() {
     setIsSubmitting(true);
     
     try {
-      // Create formatted message
-      const message = `📩 New Contact Form Submission:\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n💬 Message: ${formData.message}`;
-      
-      // Send to WhatsApp (direct API call)
-      const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
-      
-      // Send email using Web3Forms (free form service)
-      const emailData = {
-        access_key: 'YOUR_ACCESS_KEY', // You need to get this from web3forms.com
+      // Save to Supabase database
+      const contactData = {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         message: formData.message,
-        subject: 'New Contact Form - Ideal Education by Ashutosh Sir'
+        createdAt: new Date()
       };
       
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(emailData),
-        });
-        
-        if (response.ok) {
-          setSubmitMessage('✅ Message sent successfully via WhatsApp and Email! We will contact you soon.');
-        } else {
-          throw new Error('Email service failed');
-        }
-      } catch (emailError) {
-        // Fallback: open email client
-        const emailSubject = `New Contact Form - ${formData.name}`;
-        const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
-        window.location.href = `mailto:ashutoshrajan303@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-        setSubmitMessage('✅ WhatsApp opened with your message! Email client also opened. Please send the email to complete.');
-      }
+      const { data, error } = await supabase
+        .from('contactSubmissions')
+        .insert([contactData])
+        .select();
       
-      // Clear form
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      if (error) throw error;
+      
+      // Create formatted message for WhatsApp
+      const message = `📩 New Contact Form Submission:\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n💬 Message: ${formData.message}`;
+      
+      // Send to WhatsApp
+      const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
+      setSubmitMessage('✅ Thank you! Your message has been saved and WhatsApp opened. We will contact you soon!');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
       
     } catch (error) {
-      setSubmitMessage('❌ Sorry, there was an error. Please contact us directly at ashutoshrajan303@gmail.com or call +91 91552 92575.');
+      console.error('Error submitting form:', error);
+      setSubmitMessage('❌ Error submitting form. Please try again or contact us directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -839,18 +832,6 @@ export default function Home() {
                     {submitMessage}
                   </div>
                 )}
-
-                <div style={{
-                  background: '#fef3c7',
-                  border: '1px solid #f59e0b',
-                  borderRadius: '0.5rem',
-                  padding: '1rem',
-                  marginBottom: '1.5rem'
-                }}>
-                  <p style={{ color: '#92400e', fontSize: '0.9rem', margin: 0 }}>
-                    <strong>📧 Email Setup Required:</strong> To receive emails directly, get a free Web3Forms access key from <a href="https://web3forms.com" target="_blank" rel="noopener noreferrer" style={{ color: '#1e40af', textDecoration: 'underline' }}>web3forms.com</a> and replace 'YOUR_ACCESS_KEY' in code. Currently, form opens email client as fallback.
-                  </p>
-                </div>
 
                 <button
                   type="submit"

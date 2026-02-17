@@ -205,3 +205,14 @@ export const getCurrentUser = async () => {
   const { data: { user } } = await supabase.auth.getUser();
   return user;
 };
+
+// Contact Form operations
+export const submitContactForm = async (contactData: any) => {
+  const { data, error } = await supabase
+    .from('contactSubmissions')
+    .insert([contactData])
+    .select();
+  
+  if (error) throw error;
+  return data?.[0];
+};
