@@ -184,42 +184,33 @@ export const signUpUser = async (email: string, password: string, name: string, 
 
     // Send notification email to admin
     try {
-      const notificationMessage = `🎓 New Student Registration at Ideal Education by Ashutosh Sir
+      // Save notification to database for admin to see
+      const notificationData = {
+        type: 'new_registration',
+        title: `New Student Registration: ${name}`,
+        message: `A new student has registered at Ideal Education by Ashutosh Sir.
 
-👤 Student Details:
+Student Details:
 • Name: ${name}
 • Email: ${email}
 • Class Group: ${classGroup}
 • Registration Date: ${new Date().toLocaleString()}
 
-📱 Contact Information:
-• WhatsApp: +91 91552 92575
-• Email: ashutoshrajan303@gmail.com
+Please login to your admin dashboard to manage this student.`,
+        studentName: name,
+        studentEmail: email,
+        studentClassGroup: classGroup,
+        createdAt: new Date(),
+        read: false
+      };
 
-🌐 Please login to your admin dashboard to manage this student.
-`;
+      await supabase
+        .from('notifications')
+        .insert([notificationData]);
 
-      // Send email notification (using mailto as fallback)
-      const subject = `New Student Registration: ${name}`;
-      const mailtoUrl = `mailto:ashutoshrajan303@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(notificationMessage)}`;
-      
-      // In a real implementation, you would use an email service here
-      // For now, this opens the email client with the notification
-      if (typeof window !== 'undefined') {
-        window.open(mailtoUrl, '_blank');
-      }
-
-      // Send WhatsApp notification
-      const whatsappMessage = `🎓 New Student Registration!\n\n👤 Name: ${name}\n📧 Email: ${email}\n📚 Class: ${classGroup}\n📅 Date: ${new Date().toLocaleString()}`;
-      const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(whatsappMessage)}`;
-      
-      if (typeof window !== 'undefined') {
-        setTimeout(() => {
-          window.open(whatsappUrl, '_blank');
-        }, 2000);
-      }
+      console.log('Registration notification saved to database');
     } catch (notificationError) {
-      console.log('Notification failed:', notificationError);
+      console.log('Failed to save notification:', notificationError);
     }
   }
   
@@ -246,7 +237,7 @@ export const getCurrentUser = async () => {
   return user;
 };
 
-// Contact Form operations
+// Notification operations
 export const submitContactForm = async (contactData: any) => {
   const { data, error } = await supabase
     .from('contactSubmissions')
@@ -255,4 +246,24 @@ export const submitContactForm = async (contactData: any) => {
   
   if (error) throw error;
   return data?.[0];
+};
+
+export const getNotifications = async () => {
+  const { data, error } = await supabase
+    .from('notifications')
+    .select('*')
+    .order('createdAt', { ascending: false })
+    .limit(50);
+  
+  if (error) throw error;
+  return data;
+};
+
+export const markNotificationAsRead = async (notificationId: string) => {
+  const { error } = await supabase
+    .from('notifications')
+    .update({ read: true })
+    .eq('id', notificationId);
+  
+  if (error) throw error;
 };
