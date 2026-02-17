@@ -105,7 +105,7 @@ export default function Home() {
       {/* Navigation */}
       <nav style={{
         background: 'white',
-        padding: '1rem 2rem',
+        padding: '1rem',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         position: 'sticky',
         top: 0,
@@ -125,10 +125,11 @@ export default function Home() {
           </div>
           <div style={{ 
             display: 'flex', 
-            gap: '2rem',
+            gap: '1rem',
             alignItems: 'center',
             flexWrap: 'wrap',
-            justifyContent: 'flex-end'
+            justifyContent: 'flex-end',
+            width: '100%'
           }}>
             <Link href="/" style={{ 
               color: '#374151', 
@@ -172,18 +173,21 @@ export default function Home() {
         </div>
         <style jsx>{`
           @media (max-width: 768px) {
-            nav div {
-              flex-direction: column;
+            nav > div {
+              flex-direction: column !important;
               align-items: flex-start !important;
+              gap: 1rem !important;
             }
-            nav div:last-child {
-              width: 100%;
-              justify-content: center;
-              margin-top: 1rem;
+            nav > div > div {
+              width: 100% !important;
+              justify-content: center !important;
+              margin-top: 1rem !important;
+              flex-wrap: wrap !important;
             }
-            nav div:last-child a {
-              padding: 0.5rem 1rem;
-              font-size: 0.9rem;
+            nav > div > div > a {
+              padding: 0.75rem 1rem !important;
+              font-size: 0.9rem !important;
+              margin: 0.25rem !important;
             }
           }
           
