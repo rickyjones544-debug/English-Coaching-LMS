@@ -181,6 +181,46 @@ export const signUpUser = async (email: string, password: string, name: string, 
       classGroup: classGroup as '1-5' | '6-8' | '9-12',
       createdAt: new Date()
     });
+
+    // Send notification email to admin
+    try {
+      const notificationMessage = `🎓 New Student Registration at Ideal Education by Ashutosh Sir
+
+👤 Student Details:
+• Name: ${name}
+• Email: ${email}
+• Class Group: ${classGroup}
+• Registration Date: ${new Date().toLocaleString()}
+
+📱 Contact Information:
+• WhatsApp: +91 91552 92575
+• Email: ashutoshrajan303@gmail.com
+
+🌐 Please login to your admin dashboard to manage this student.
+`;
+
+      // Send email notification (using mailto as fallback)
+      const subject = `New Student Registration: ${name}`;
+      const mailtoUrl = `mailto:ashutoshrajan303@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(notificationMessage)}`;
+      
+      // In a real implementation, you would use an email service here
+      // For now, this opens the email client with the notification
+      if (typeof window !== 'undefined') {
+        window.open(mailtoUrl, '_blank');
+      }
+
+      // Send WhatsApp notification
+      const whatsappMessage = `🎓 New Student Registration!\n\n👤 Name: ${name}\n📧 Email: ${email}\n📚 Class: ${classGroup}\n📅 Date: ${new Date().toLocaleString()}`;
+      const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(whatsappMessage)}`;
+      
+      if (typeof window !== 'undefined') {
+        setTimeout(() => {
+          window.open(whatsappUrl, '_blank');
+        }, 2000);
+      }
+    } catch (notificationError) {
+      console.log('Notification failed:', notificationError);
+    }
   }
   
   return data;
