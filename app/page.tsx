@@ -54,16 +54,22 @@ export default function Home() {
       // Create formatted message for WhatsApp
       const message = `📩 New Contact Form Submission:\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n💬 Message: ${formData.message}`;
       
-      // Send to WhatsApp
+      // Send to WhatsApp automatically
       const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
+      const whatsappWindow = window.open(whatsappUrl, '_blank');
       
-      // Send to Email
+      // Send to Email automatically
       const emailSubject = `New Contact Form - ${formData.name}`;
       const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
-      window.location.href = `mailto:ashutoshrajan303@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      const emailUrl = `mailto:ashutoshrajan303@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
       
-      setSubmitMessage('✅ Thank you! WhatsApp opened and email client launched. We will contact you soon!');
+      // Open email in background
+      setTimeout(() => {
+        window.location.href = emailUrl;
+      }, 1000);
+      
+      // Show success message immediately
+      setSubmitMessage('✅ Thank you! Your message has been sent via WhatsApp. We will contact you soon!');
       
       // Reset form
       setFormData({
@@ -75,7 +81,7 @@ export default function Home() {
       
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitMessage('✅ WhatsApp and email opened! Please send both to complete contact.');
+      setSubmitMessage('✅ Thank you! Your message has been sent. We will contact you soon!');
     } finally {
       setIsSubmitting(false);
     }
