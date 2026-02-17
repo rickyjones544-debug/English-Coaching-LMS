@@ -23,6 +23,12 @@ import {
   MessageCircle
 } from 'lucide-react';
 
+// Add responsive styles at the top
+const responsiveStyles = {
+  mobile: '@media (max-width: 768px)',
+  tablet: '@media (max-width: 1024px)'
+};
+
 export default function Home() {
   const [formData, setFormData] = useState({
     name: '',
@@ -40,7 +46,7 @@ export default function Home() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
@@ -110,49 +116,133 @@ export default function Home() {
           margin: '0 auto',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1rem'
         }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3b82f6' }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3b82f6', flex: '1 1 auto' }}>
             Ideal Education by Ashutosh Sir (Rajan)
           </div>
-          <div style={{ display: 'flex', gap: '2rem' }}>
-            <Link href="/" style={{ color: '#374151', textDecoration: 'none', fontWeight: '500' }}>Home</Link>
-            <Link href="#about" style={{ color: '#374151', textDecoration: 'none', fontWeight: '500' }}>About</Link>
-            <Link href="#courses" style={{ color: '#374151', textDecoration: 'none', fontWeight: '500' }}>Courses</Link>
-            <Link href="#contact" style={{ color: '#374151', textDecoration: 'none', fontWeight: '500' }}>Contact</Link>
+          <div style={{ 
+            display: 'flex', 
+            gap: '2rem',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-end'
+          }}>
+            <Link href="/" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              fontWeight: '500',
+              padding: '0.5rem 0'
+            }}>Home</Link>
+            <Link href="#about" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              fontWeight: '500',
+              padding: '0.5rem 0'
+            }}>About</Link>
+            <Link href="#courses" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              fontWeight: '500',
+              padding: '0.5rem 0'
+            }}>Courses</Link>
+            <Link href="#contact" style={{ 
+              color: '#374151', 
+              textDecoration: 'none', 
+              fontWeight: '500',
+              padding: '0.5rem 0'
+            }}>Contact</Link>
             <Link 
               href="/auth/login" 
               style={{ 
                 background: '#3b82f6', 
                 color: 'white', 
-                padding: '0.5rem 1.5rem', 
+                padding: '0.5rem 1rem', 
                 borderRadius: '0.5rem', 
                 textDecoration: 'none',
-                fontWeight: '600'
+                fontWeight: '600',
+                whiteSpace: 'nowrap'
               }}
             >
               Sign In
             </Link>
           </div>
         </div>
+        <style jsx>{`
+          @media (max-width: 768px) {
+            nav div {
+              flex-direction: column;
+              align-items: flex-start !important;
+            }
+            nav div:last-child {
+              width: 100%;
+              justify-content: center;
+              margin-top: 1rem;
+            }
+            nav div:last-child a {
+              padding: 0.5rem 1rem;
+              font-size: 0.9rem;
+            }
+          }
+          
+          @media (max-width: 768px) {
+            #contact > div > div {
+              grid-template-columns: 1fr !important;
+              max-width: 100%;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            section {
+              padding: 2rem 1rem !important;
+            }
+            h1 {
+              font-size: 1.8rem !important;
+            }
+            h2 {
+              font-size: 1.5rem !important;
+            }
+            h3 {
+              font-size: 1.2rem !important;
+            }
+          }
+        `}</style>
       </nav>
 
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: '5rem 2rem',
+        padding: '3rem 1rem',
         textAlign: 'center',
         color: 'white'
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '3rem', marginBottom: '1rem', fontWeight: 'bold' }}>
+          <h1 style={{ 
+            fontSize: 'clamp(2rem, 5vw, 3rem)', 
+            marginBottom: '1rem', 
+            fontWeight: 'bold',
+            lineHeight: '1.2'
+          }}>
             Master English with Ashutosh Sir
           </h1>
-          <p style={{ fontSize: '1.25rem', marginBottom: '2rem', lineHeight: '1.6' }}>
+          <p style={{ 
+            fontSize: 'clamp(1rem, 3vw, 1.25rem)', 
+            marginBottom: '2rem', 
+            lineHeight: '1.6'
+          }}>
             Join Ideal Education by Ashutosh Sir for the best English coaching classes for students from Class 1 to 12. 
             Expert teachers, interactive learning, and proven results.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ 
+            display: 'flex', 
+            gap: '1rem', 
+            justifyContent: 'center', 
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
             <Link 
               href="/auth/register"
               style={{
@@ -161,15 +251,15 @@ export default function Home() {
                 padding: '1rem 2rem',
                 borderRadius: '0.5rem',
                 textDecoration: 'none',
-                fontSize: '1.1rem',
                 fontWeight: '600',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem'
+                fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                display: 'inline-block',
+                marginBottom: '1rem',
+                width: '100%',
+                maxWidth: '200px'
               }}
             >
-              <Users size={20} />
-              Start Learning Today
+              Get Started Free
             </Link>
             <Link 
               href="#courses"
@@ -180,14 +270,13 @@ export default function Home() {
                 borderRadius: '0.5rem',
                 border: '2px solid white',
                 textDecoration: 'none',
-                fontSize: '1.1rem',
                 fontWeight: '600',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem'
+                fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                display: 'inline-block',
+                width: '100%',
+                maxWidth: '200px'
               }}
             >
-              <BookOpen size={20} />
               View Courses
             </Link>
           </div>
@@ -533,16 +622,32 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={{ padding: '4rem 2rem', background: '#f9fafb' }}>
+      <section id="contact" style={{ padding: '3rem 1rem', background: '#f9fafb' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', textAlign: 'center', color: '#1f2937' }}>
+          <h2 style={{ 
+            fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', 
+            marginBottom: '1rem', 
+            textAlign: 'center', 
+            color: '#1f2937' 
+          }}>
             Get in Touch
           </h2>
-          <p style={{ fontSize: '1.2rem', color: '#6b7280', textAlign: 'center', marginBottom: '3rem' }}>
+          <p style={{ 
+            fontSize: 'clamp(1rem, 3vw, 1.2rem)', 
+            color: '#6b7280', 
+            textAlign: 'center', 
+            marginBottom: '3rem' 
+          }}>
             Have questions? We'd love to hear from you!
           </p>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1fr', 
+            gap: '3rem',
+            maxWidth: '600px',
+            margin: '0 auto'
+          }}>
             {/* Contact Information */}
             <div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', color: '#1f2937' }}>
@@ -559,13 +664,14 @@ export default function Home() {
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    flexShrink: 0
                   }}>
                     <Phone size={24} color="white" />
                   </div>
                   <div>
                     <p style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>Phone</p>
-                    <p style={{ color: '#6b7280' }}>+91 91552 92575</p>
+                    <p style={{ color: '#6b7280', wordBreak: 'break-word' }}>+91 91552 92575</p>
                   </div>
                 </div>
 
@@ -578,13 +684,14 @@ export default function Home() {
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    flexShrink: 0
                   }}>
                     <Mail size={24} color="white" />
                   </div>
                   <div>
                     <p style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>Email</p>
-                    <p style={{ color: '#6b7280' }}>ashutoshrajan303@gmail.com</p>
+                    <p style={{ color: '#6b7280', wordBreak: 'break-word' }}>ashutoshrajan303@gmail.com</p>
                   </div>
                 </div>
 
@@ -597,7 +704,8 @@ export default function Home() {
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    flexShrink: 0
                   }}>
                     <MessageCircle size={24} color="white" />
                   </div>
@@ -612,7 +720,8 @@ export default function Home() {
                         textDecoration: 'none',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.5rem'
+                        gap: '0.5rem',
+                        wordBreak: 'break-word'
                       }}
                     >
                       Chat on WhatsApp
@@ -645,7 +754,8 @@ export default function Home() {
                       padding: '0.75rem',
                       border: '1px solid #d1d5db',
                       borderRadius: '0.5rem',
-                      fontSize: '1rem'
+                      fontSize: '1rem',
+                      boxSizing: 'border-box'
                     }}
                   />
                 </div>
@@ -665,7 +775,8 @@ export default function Home() {
                       padding: '0.75rem',
                       border: '1px solid #d1d5db',
                       borderRadius: '0.5rem',
-                      fontSize: '1rem'
+                      fontSize: '1rem',
+                      boxSizing: 'border-box'
                     }}
                   />
                 </div>
@@ -685,7 +796,8 @@ export default function Home() {
                       padding: '0.75rem',
                       border: '1px solid #d1d5db',
                       borderRadius: '0.5rem',
-                      fontSize: '1rem'
+                      fontSize: '1rem',
+                      boxSizing: 'border-box'
                     }}
                   />
                 </div>
@@ -706,7 +818,8 @@ export default function Home() {
                       border: '1px solid #d1d5db',
                       borderRadius: '0.5rem',
                       fontSize: '1rem',
-                      resize: 'vertical'
+                      resize: 'vertical',
+                      boxSizing: 'border-box'
                     }}
                   />
                 </div>
@@ -731,7 +844,7 @@ export default function Home() {
                   marginBottom: '1.5rem'
                 }}>
                   <p style={{ color: '#92400e', fontSize: '0.9rem', margin: 0 }}>
-                    <strong>📧 Email Setup Required:</strong> To receive emails directly, get a free Web3Forms access key from <a href="https://web3forms.com" target="_blank" rel="noopener noreferrer" style={{ color: '#1e40af', textDecoration: 'underline' }}>web3forms.com</a> and replace 'YOUR_ACCESS_KEY' in the code. Currently, form opens email client as fallback.
+                    <strong>📧 Email Setup Required:</strong> To receive emails directly, get a free Web3Forms access key from <a href="https://web3forms.com" target="_blank" rel="noopener noreferrer" style={{ color: '#1e40af', textDecoration: 'underline' }}>web3forms.com</a> and replace 'YOUR_ACCESS_KEY' in code. Currently, form opens email client as fallback.
                   </p>
                 </div>
 
@@ -750,7 +863,9 @@ export default function Home() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.5rem'
+                    gap: '0.5rem',
+                    width: '100%',
+                    boxSizing: 'border-box'
                   }}
                 >
                   {isSubmitting ? 'Sending...' : (
