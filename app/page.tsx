@@ -54,22 +54,16 @@ export default function Home() {
       // Create formatted message for WhatsApp
       const message = `📩 New Contact Form Submission:\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n💬 Message: ${formData.message}`;
       
-      // Send to WhatsApp automatically
-      const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(message)}`;
-      const whatsappWindow = window.open(whatsappUrl, '_blank');
-      
       // Send to Email automatically
       const emailSubject = `New Contact Form - ${formData.name}`;
       const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
       const emailUrl = `mailto:ashutoshrajan303@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
       
-      // Open email in background
-      setTimeout(() => {
-        window.location.href = emailUrl;
-      }, 1000);
+      // Open email immediately
+      window.location.href = emailUrl;
       
       // Show success message immediately
-      setSubmitMessage('✅ Thank you! Your message has been sent via WhatsApp. We will contact you soon!');
+      setSubmitMessage('✅ Thank you! Your message has been sent via Email. We will contact you soon!');
       
       // Reset form
       setFormData({
@@ -850,9 +844,42 @@ export default function Home() {
                   {isSubmitting ? 'Sending...' : (
                     <>
                       <Send size={20} />
-                      Send Message
+                      Send via Email
                     </>
                   )}
+                </button>
+                
+                <div style={{ textAlign: 'center', margin: '1rem 0' }}>
+                  <span style={{ color: '#6b7280' }}>or</span>
+                </div>
+                
+                <button
+                  type="button"
+                  onClick={() => {
+                    const message = `📩 New Contact Form Submission:\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n💬 Message: ${formData.message}`;
+                    const whatsappUrl = `https://wa.me/919155292575?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                    setSubmitMessage('✅ WhatsApp opened! Please send the message to complete contact.');
+                  }}
+                  style={{
+                    background: '#25d366',
+                    color: 'white',
+                    padding: '1rem 2rem',
+                    borderRadius: '0.5rem',
+                    border: 'none',
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  <MessageCircle size={20} />
+                  Send via WhatsApp
                 </button>
               </form>
             </div>
